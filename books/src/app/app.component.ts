@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 
 import { Book } from './models';
+import { NgForm } from '@angular/forms';
+
+import { BOOKS } from './data';
 
 @Component({
   selector: 'app-root',
@@ -9,11 +12,4 @@ import { Book } from './models';
 })
 export class AppComponent {
   title = 'Angular';
-
-  book: Book = new Book();
-
-  onSubmit(event: Event) {
-    event.preventDefault();
-    console.log('submitting form', this.book);
-  }
 }
