@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Book } from '../../models';
-import { BOOKS } from '../../data';
+import { BookService } from '../../services';
 
 @Component({
   selector: 'app-book-list',
@@ -9,11 +9,14 @@ import { BOOKS } from '../../data';
   styleUrls: ['./book-list.component.css'],
 })
 export class BookListComponent implements OnInit {
-  books: Book[] = BOOKS;
+  books: Book[] = [];
   selectedBook: Book;
-  constructor() {}
 
-  ngOnInit() {}
+  constructor(private bookService: BookService) {}
+
+  ngOnInit() {
+    this.bookService.getBooks().subscribe(books => (this.books = books));
+  }
 
   onSelect(book: Book): void {
     console.log('selected', book);
@@ -30,6 +33,26 @@ export class BookListComponent implements OnInit {
   onCreate(book: Book) {
     console.log('creating book', book);
 
-    this.books.push(book);
+    this.bookService.createBook(book).subscribe(createdBook => {
+      console.log(createdBook);
+      // this.books.push(createdBook);
+      this.books = [...this.books, createdBook];
+    });
+  }
+
+  onDelete(id: number) {
+    console.log('deleting book');
+
+    this.bookService.removeBook(id).subscribe(deletedBook => {
+      console.log('removed book', deletedBook);
+
+      this.books = this.books.filter(book => book.id !== deletedBook.id);
+    });
+  }
+
+  onEvent(event: Event): void {
+    console.log('eventing....');
+
+    event.stopPropagation();
   }
 }
