@@ -1,13 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { of, Observable } from 'rxjs';
+import { of, Observable, BehaviorSubject } from 'rxjs';
 
 import { BOOKS } from '../data';
 import { Book } from '../models';
 
 @Injectable()
 export class BookService {
-  private base = 'http://59498bce6d49df0011102cfc.mockapi.io/books';
+  // private base = 'http://59498bce6d49df0011102cfc.mockapi.io/books';
+  private base = '/api/books';
+
+  books$ = new BehaviorSubject<Book[]>([]);
 
   constructor(private http: HttpClient) {}
 
@@ -29,6 +32,6 @@ export class BookService {
   }
 
   updateBook(book: Book): Observable<Book> {
-    return this.http.put<Book>(`${this.base}/${book.id}`, book);
+    return this.http.put<Book>(`${this.base}/${book._id}`, book);
   }
 }

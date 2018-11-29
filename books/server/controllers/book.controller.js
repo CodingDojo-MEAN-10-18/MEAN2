@@ -7,12 +7,12 @@ module.exports = {
     console.log('sending all books');
     Book.find({})
       .then(books => response.json(books))
-      .catch(console.log);
+      .catch(error => response.status(500).json(error));
   },
   show(request, response) {
     Book.findById(request.params.book_id)
       .then(book => response.json(book))
-      .catch(console.log);
+      .catch(error => response.status(500).json(error));
   },
   create(request, response) {
     Book.create(request.body)
@@ -39,6 +39,6 @@ module.exports = {
   destroy(request, response) {
     Book.findByIdAndRemove(request.params.book_id)
       .then(book => response.json(book))
-      .catch(console.log);
+      .catch(error => response.status(500).json(error));
   },
 };

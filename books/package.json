@@ -2,8 +2,8 @@
   "name": "books",
   "version": "0.0.0",
   "scripts": {
-    "ng": "nf start",
-    "start": "ng serve",
+    "ng": "ng",
+    "start": "nf start",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -23,11 +23,17 @@
     "@angular/platform-browser-dynamic": "~7.0.0",
     "@angular/router": "~7.0.0",
     "@status/codes": "^1.1.1",
+    "bcrypt": "^3.0.2",
     "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
     "core-js": "^2.5.4",
     "express": "^4.16.4",
+    "express-session": "^1.15.6",
     "mongoose": "^5.3.12",
+    "mongoose-unique-validator": "^2.0.2",
+    "morgan": "^1.9.1",
     "rxjs": "~6.3.3",
+    "validator": "^10.9.0",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
