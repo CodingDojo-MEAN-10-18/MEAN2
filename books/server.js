@@ -32,4 +32,4 @@ require('./server/config/database');
 
 app.use('/api', require('./server/routes'));
 app.use(require('./server/routes/catch-all.route'));
-app.listen(port, () => console.log(`Express server listneing on port ${port}`));
+app.listen(port, () => console.log(`Express server listening on port ${port}`));

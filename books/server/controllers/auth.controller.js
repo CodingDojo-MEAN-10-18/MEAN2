@@ -11,6 +11,7 @@ module.exports = {
           if (!valid) throw new Error();
 
           // login
+          completeLogin(request, response, user);
         });
       })
       .catch(() => {
@@ -25,6 +26,7 @@ module.exports = {
     User.create(request.body)
       .then(user => {
         // login
+        completeLogin(request, response, user);
       })
       .catch(error => {
         const errors = Object.keys(error.errors).map(
@@ -34,5 +36,25 @@ module.exports = {
         response.status(Http.UnprocessableEntity).json(errors);
       });
   },
-  logout(request, response) {},
+  logout(request, response) {
+    console.log('logging out server side');
+
+    request.session.destroy();
+    response.clearCookie('userID');
+    response.clearCookie('expiration');
+
+    response.json(true);
+  },
 };
+
+function completeLogin(request, response, user) {
+  console.log('completing login');
+
+  request.session.user = user.toObject();
+  delete request.session.user.password;
+
+  response.cookie('userID', user._id.toString());
+  response.cookie('expiration', Date.now() + 86400 * 1000);
+
+  response.json(user);
+}
